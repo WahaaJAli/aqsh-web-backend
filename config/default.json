@@ -1,0 +1,13 @@
+{
+    "name": "The National Services Academy",
+    "database": {
+        "name": "Mongoose"
+    },
+    "debug": "tnsa:server",
+    "command": "set DEBUG=tnsa:server",
+    
+    "debug-db": "tnsa:database",
+    "command-db": "set DEBUG=tnsa:database",
+    "multiple-command": "set DEBUG=tnsa:database,tnsa:server",
+    "all-command": "set DEBUG=tnsa:*"
+}
