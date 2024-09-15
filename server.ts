@@ -5,8 +5,10 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import mongoDb from 'mongoose'
-// import banks from './src/routers/banks'
-// import customers from './src/routers/customers'
+import banks from './src/routers/banks'
+import customers from './src/routers/customers'
+import home from './src/routers/home'
+import promise from './src/routers/promise'
 
 const server = express()
 const port = process.env.PORT ?? 2123;
@@ -28,10 +30,9 @@ else if(server.get(ENVIRONMENT) === 'production') {
     debug('Environment: Production')
 }
 
-// server.use('/', home)
-// server.use('/promise', promise)
-// server.use('/reminders', reminders)
-// server.use('/banks', banks)
-// server.use('/customers', customers)
+server.use('/', home)
+server.use('/promise', promise)
+server.use('/banks', banks)
+server.use('/customers', customers)
 
 server.listen(port, (): void => debug(`Server started on port ${port}`))
