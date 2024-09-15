@@ -18,9 +18,9 @@ const ENVIRONMENT = 'env'
 
 server.use(express.json(), express.static('public'), cors(), helmet(), express.urlencoded({extended: true}))
 
-// mongoDb.connect('mongodb://0.0.0.0:27017/tnsa')
-//     .then((): void => debugDb('Database: Connected to MongoDB'))
-//     .catch(err => debugDb(`Database: Connection failed due to: ${err}`))
+mongoDb.connect('mongodb://0.0.0.0:27017/aqsh')
+    .then((): void => debugDb('Database: Connected to MongoDB'))
+    .catch(err => debugDb(`Database: Connection failed due to: ${err}`))
 
 if(server.get(ENVIRONMENT) === 'development') { 
     server.use(morgan('dev'))
