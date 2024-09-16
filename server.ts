@@ -12,22 +12,22 @@ import promise from './src/routers/promise'
 
 const server = express()
 const port = process.env.PORT ?? 2123;
-const debug = debugg(config.get('debug'))
-const debugDb = debugg(config.get('debug-db'))
-const ENVIRONMENT = 'env'
+const DEBUG = debugg(config.get('debug'))
+const ENVIRONMENT: string = 'env'
+const DATABASE: string = config.get('database.connection')
 
 server.use(express.json(), express.static('public'), cors(), helmet(), express.urlencoded({extended: true}))
 
-mongoDb.connect('mongodb://0.0.0.0:27017/aqsh')
-    .then((): void => debugDb('Database: Connected to MongoDB'))
-    .catch(err => debugDb(`Database: Connection failed due to: ${err}`))
+mongoDb.connect(DATABASE)
+    .then((): void => DEBUG('Database: Connected to MongoDB'))
+    .catch(err => DEBUG(`Database: Connection failed due to: ${err}`))
 
 if(server.get(ENVIRONMENT) === 'development') { 
     server.use(morgan('dev'))
-    debug('Environment: Development')
+    DEBUG('Environment: Development')
 }
 else if(server.get(ENVIRONMENT) === 'production') {
-    debug('Environment: Production')
+    DEBUG('Environment: Production')
 }
 
 server.use('/', home)
@@ -35,4 +35,4 @@ server.use('/promise', promise)
 server.use('/banks', banks)
 server.use('/customers', customers)
 
-server.listen(port, (): void => debug(`Server started on port ${port}`))
+server.listen(port, (): void => DEBUG(`Server started on port ${port}`))
