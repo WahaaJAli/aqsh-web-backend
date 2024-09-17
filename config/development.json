@@ -1,6 +1,7 @@
 {
     "name": "The AQSH Premier Islamic Banking - Dev",
     "database": {
-        "connection": "mongodb://0.0.0.0:27017/aqsh"
+        "connection": "mongodb://0.0.0.0:27017/aqsh",
+        "name": "Mongoose - Dev"
     }
 }

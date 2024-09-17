@@ -11,7 +11,7 @@ import home from './src/routers/home'
 import promise from './src/routers/promise'
 
 const server = express()
-const port = process.env.PORT ?? 2123;
+const PORT = process.env.PORT ?? 2123;
 const DEBUG = debugg(config.get('debug'))
 const ENVIRONMENT: string = 'env'
 const DATABASE: string = config.get('database.connection')
@@ -35,4 +35,4 @@ server.use('/promise', promise)
 server.use('/banks', banks)
 server.use('/customers', customers)
 
-server.listen(port, (): void => DEBUG(`Server started on port ${port}`))
+server.listen(PORT, (): void => DEBUG(`Server started on Port: ${PORT}`))
