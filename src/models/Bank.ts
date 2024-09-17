@@ -13,6 +13,7 @@ const BankSchema: Schema<IBank> = new Schema({
         // match: /PKKA$/,
         required: true,
         trim: true,
+        unique: true,
         uppercase: true,
     },
     customers: {

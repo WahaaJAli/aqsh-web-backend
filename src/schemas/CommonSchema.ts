@@ -1,13 +1,14 @@
 const bankName = {
     type: String,
-    minlength: 8,
     maxlength: 50,
-    validate: {
-        validator: function(value: string) { return /^[a-zA-Z\s]+$/.test(value) },
-        message: (props: { value: string }) => `${props.value} is not a valid bank name!`
-    },
+    minlength: 8,
     required: true,
     trim: true,
+    unique: true,
+    validate: {
+        validator: function(value: string) { return /^[a-zA-Z\s]+$/.test(value) },
+        message: (props: { value: string }): string => `${props.value} is not a valid bank name!`
+    },
 }
 
 const bankNickname = {
@@ -15,13 +16,14 @@ const bankNickname = {
     length: 4,
     required: true,
     trim: true,
+    unique: true,
     uppercase: true,
 }
 
 const customerName = {
     type: String,
-    minlength: 4,
     maxlength: 40,
+    minlength: 4,
     required: true,
     trim: true,
 }
@@ -33,8 +35,8 @@ const dateCreated = {
 
 const username = {
     type: String,
-    minlength: 8,
     maxlength: 40,
+    minlength: 8,
     required: true,
     trim: true,
 }

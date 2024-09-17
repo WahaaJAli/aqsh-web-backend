@@ -25,13 +25,14 @@ const CustomerSchema: Schema<ICustomer> = new Schema({
     },
     phone: {
         type: String,
+        required: true,
+        get: (value: string) => { return value },
+        set: (value: string) => { return value },
+        trim: true,
         validate: {
             validator: function(value: string) { return /^\d{11}$/.test(value) },
             message: (props: { value: string }) => `${props.value} is not a valid phone number!`
         },
-        set: (value: string) => { return value },
-        required: true,
-        trim: true,
     },
     customerName,
     dateCreated,
