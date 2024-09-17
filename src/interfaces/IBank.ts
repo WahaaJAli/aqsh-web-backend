@@ -1,12 +1,12 @@
 import { Date, Document, Types } from "mongoose"
 import ICustomer from "./ICustomer"
 
+export type ICustomer_Bank = Readonly<Pick<ICustomer, 'customerName' | 'username'>>
 export default interface IBank extends Document {
     readonly _id: Types.ObjectId
     bic: string
-    customers: Omit<ICustomer, 'banks'>[] | null
-    customersCount: number
+    customers: ICustomer_Bank[] | null
     dateCreated: Date
-    name: string
-    nickName: string
+    bankName: string
+    nickname: string
 }

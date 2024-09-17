@@ -11,16 +11,16 @@ const baseURL = '/'
 const debugDb = debugg(config.get('debug-db'))
 
 router.get(baseURL, async (req: Request, res: Response) => {
-    // .find({ nickName: { $nin: ['FAYS', 'MUCB'] } })
-    // .or([ { nickName: 'FAYS'}, {BIC: 'FAYSPKKA'}])
+    // .find({ nickname: { $nin: ['FAYS', 'MUCB'] } })
+    // .or([ { nickname: 'FAYS'}, {BIC: 'FAYSPKKA'}])
     // Regular Expression 
-    // .find({ nickName: /^Startswith, Endswith$, .*Between.*/i(case Insensitive)})
+    // .find({ nickname: /^Startswith, Endswith$, .*Between.*/i(case Insensitive)})
     // Pagination 
     // .skip((pageNumber - 1) * pageSize)
     // .limit(pageSize)
 
     // mongoimport --db dbName --collection collectionName --file fileName.json --jsonArray
-    await Bank.find().sort({name: 1}).lean()
+    await Bank.find({bic: /PKKA$/i}).sort({bankName: 1}).lean()
         .then(result => res.status(200).json(result))
         .catch(error => res.status(error.status).json({error}))
 })
@@ -36,7 +36,7 @@ router.get(`${baseURL}:id`, async (req: Request, res: Response) => {
 router.post(baseURL, async (req: Request, res: Response) => {
     try {
         validate(req.body)
-        const existingBank: (IBank | null) = await Bank.findOne({nickName: req.body.nickName})
+        const existingBank: (IBank | null) = await Bank.findOne({nickname: req.body.nickname})
         if (existingBank) return res.status(409).json({ message: "Bank with the same Nickname already exists." })
 
         const bank: IBank = await Bank.create(req.body)

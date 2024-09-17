@@ -1,65 +1,36 @@
+import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonSchema"
+import mongoose, { Schema } from "mongoose"
 import { z } from "zod"
-import IBank from "../interfaces/IBank"
-import mongoose from "mongoose"
+import IBank, { ICustomer_Bank } from "../interfaces/IBank"
 
-const BankSchema = new mongoose.Schema({
+const CustomerSchema: Schema<ICustomer_Bank> = new Schema({customerName, username})
+
+const BankSchema: Schema<IBank> = new Schema({
     bic: {
         type: String,
-        maxlength: 11,
         minlength: 8,
+        maxlength: 11,
+        // match: /PKKA$/,
         required: true,
         trim: true,
         uppercase: true,
     },
     customers: {
-        type: new mongoose.Schema({
-            name: {
-                type: String,
-                minlength: 10,
-                maxlength: 40,
-                required: true,
-                trim: true,
-            }
-        }),
-        default: null,
+        type: [CustomerSchema],
+        default: [],
     },
-    customersCount: {
-        type: Number,
-        get: (value: number) => Math.round(value),
-        set: (value: number) => Math.round(value),
-        default: 0,
-    },
-    dateCreated: { 
-        type: Date,
-        default: Date.now
-    },
-    name: {
-        type: String,
-        minlength: 8,
-        maxlength: 40,
-        required: true,
-        trim: true,
-        validate: {
-            validator: function(value: string) { return /^[a-zA-Z\s]+$/.test(value) },
-            message: (props: { value: string }) => `${props.value} is not a valid bank name!`
-        },
-    },
-    nickName: {
-        type: String,
-        length: 4,
-        required: true,
-        trim: true,
-        uppercase: true
-    }
+    bankName,
+    dateCreated,
+    nickname,
 })
 
-const BankModel = mongoose.model<IBank>('bank', BankSchema)
+const BankModel = mongoose.model<IBank>('Bank', BankSchema)
 
 const validateBank = (bank: IBank) => {
     const bankSchema = z.object({
-        bic:       z.string().min(8).max(11).transform(val => val.toUpperCase()),
-        name:      z.string().min(8).max(40).regex(/^[a-zA-Z\s]+$/, { message: `Please provide a bank without special characters or numbers.` }),
-        nickName:  z.string().length(4).refine(val => val = val.toUpperCase())
+        bic: z.string().min(8).max(11).transform(val => val.toUpperCase()),
+        bankName: z.string().min(8).max(50).regex(/^[a-zA-Z\s]+$/, { message: `Please provide a bank without special characters or numbers.` }),
+        nickname: z.string().length(4).refine(val => val = val.toUpperCase())
     })
 
     return bankSchema.parse(bank)

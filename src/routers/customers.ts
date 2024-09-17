@@ -7,7 +7,7 @@ const router = Router()
 const baseURL = '/'
 
 router.get(baseURL, async (req: Request, res: Response) => {
-    await Customer.find().sort({name: 1}).lean()
+    await Customer.find().sort({customerName: 1}).lean()
         .then(result => res.status(200).json(result))
         .catch(error => res.status(404).json(error))
 })
