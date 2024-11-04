@@ -1,7 +1,8 @@
-import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonSchema"
-import mongoose, { Schema } from "mongoose"
+import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonMongoDbSchema"
+import { bankNameRegex } from "../validators/REGEXP"
 import { z } from "zod"
 import IBank, { ICustomer_Bank } from "../interfaces/IBank"
+import mongoose, { Schema } from "mongoose"
 
 const CustomerSchema: Schema<ICustomer_Bank> = new Schema({customerName, username})
 
@@ -30,11 +31,11 @@ const BankModel = mongoose.model<IBank>('Bank', BankSchema)
 const validateBank = (bank: IBank) => {
     const bankSchema = z.object({
         bic: z.string().min(8).max(11).transform(val => val.toUpperCase()),
-        bankName: z.string().min(8).max(50).regex(/^[a-zA-Z\s]+$/, { message: `Please provide a bank without special characters or numbers.` }),
+        bankName: z.string().min(8).max(50).regex(bankNameRegex, { message: `Please provide a bank without special characters or numbers.` }),
         nickname: z.string().length(4).refine(val => val = val.toUpperCase())
     })
 
     return bankSchema.parse(bank)
 }
 
-export { BankSchema, BankModel as Bank, validateBank as validate }
+export { BankSchema, BankModel, validateBank }

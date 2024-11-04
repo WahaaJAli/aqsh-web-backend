@@ -1,4 +1,4 @@
-import { Customer, validate } from '../models/Customer'
+import { CustomerModel as Customer, validateCustomer as validate } from '../models/Customer'
 import { Request, Response, Router } from 'express'
 import { ZodError } from 'zod'
 import ICustomer from '../interfaces/ICustomer'

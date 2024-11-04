@@ -1,4 +1,4 @@
-import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonSchema"
+import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonMongoDbSchema"
 import mongoose, { Schema } from "mongoose"
 import { z } from "zod"
 import ICustomer, { IBank_Customers } from "../interfaces/ICustomer"
@@ -52,4 +52,4 @@ const validateCustomer = (customer: ICustomer) => {
     return customerSchema.parse(customer)
 }
 
-export { CustomerSchema, CustomerModel as Customer, validateCustomer as validate }
+export { CustomerSchema, CustomerModel, validateCustomer }

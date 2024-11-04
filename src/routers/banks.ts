@@ -1,4 +1,4 @@
-import { Bank, validate } from '../models/Bank'
+import { BankModel as Bank, validateBank as validate } from '../models/Bank'
 import { Router, Request, Response } from 'express'
 import { ZodError } from 'zod'
 import config from 'config'

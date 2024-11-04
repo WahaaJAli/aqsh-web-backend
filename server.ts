@@ -9,6 +9,8 @@ import banks from './src/routers/banks'
 import customers from './src/routers/customers'
 import home from './src/routers/home'
 import promise from './src/routers/promise'
+import users from './src/routers/users'
+
 
 const server = express()
 const PORT = process.env.PORT ?? 2123;
@@ -31,8 +33,9 @@ else if(server.get(ENVIRONMENT) === 'production') {
 }
 
 server.use('/', home)
-server.use('/promise', promise)
 server.use('/banks', banks)
 server.use('/customers', customers)
+server.use('/promise', promise)
+server.use('/users', users)
 
 server.listen(PORT, (): void => DEBUG(`Server started on Port: ${PORT}`))
