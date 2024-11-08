@@ -12,7 +12,6 @@ const validateUser = (user: IUserInput): IUserInput => {
         username: z.string().trim().min(8).max(40),
         email: emailSchema,
         password: passwordSchema
-        // password: z.string().regex(passwordRegex, 'Password must be at least 8 characters long, include uppercase and lowercase letters, at least one digit, and one special character.')
     })
     return userSchema.parse(user)
 }

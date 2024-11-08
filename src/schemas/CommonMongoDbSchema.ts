@@ -51,10 +51,6 @@ const password = {
     type: String,
     required: true,
     trim: true,
-    validate: {
-        validator: function(value: string) { return passwordRegex.test(value) },
-        message: (): string => 'Password must be at least 8 characters long, include uppercase and lowercase letters, at least one digit, and one special character.'
-    }
 }
 
 const username = {

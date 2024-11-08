@@ -38,4 +38,4 @@ server.use('/customers', customers)
 server.use('/promise', promise)
 server.use('/users', users)
 
-server.listen(PORT, (): void => DEBUG(`Server started on Port: ${PORT}`))
+server.listen(PORT, (): void => DEBUG(`Server: Started on Port ${PORT}`))
