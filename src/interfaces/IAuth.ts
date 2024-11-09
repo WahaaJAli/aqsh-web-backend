@@ -1,16 +1,14 @@
 import { Document, Types } from "mongoose"
 
-export interface IUser extends Document {
+export interface IAuth extends Document {
     readonly _id: Types.ObjectId
     email: string
     password: string
     username: string
     dateCreated: Date
-    generateAuthToken(): string
 }
 
-export interface IUserInput {
+export interface IAuthInput {
     email: string
     password: string
-    username: string
 }

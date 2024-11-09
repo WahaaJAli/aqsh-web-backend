@@ -1,16 +1,16 @@
-import { encrpytPassword } from "../utils/passwordUtils"
-import { IUser, IUserInput } from "../interfaces/IUser"
-import { pick } from "rambda"
+import { decryptPassword, encrpytPassword } from "../utils/passwordUtils"
+import { IAuthInput } from "../interfaces/IAuth"
+import { IUser } from "../interfaces/IUser"
 import { Router, Request, Response } from "express"
-import { UserModal as User, validateUser as validate } from "../models/User"
+import { UserModal as User } from "../models/User"
+import { validateUser as validate } from "../models/Auth"
 import { ZodError } from "zod"
 import config from 'config'
 import debugg from 'debug'
+import jwt from 'jsonwebtoken'
 
 const router: Router = Router()
 const BaseURL: string = '/'
-const userReq: (keyof IUser)[] = ['username', 'email', 'password']
-const userRes: (keyof IUser)[] = ['_id', 'username', 'email']
 const DEBUG = debugg(config.get('debug'))
 
 router.get(BaseURL, async (_req: Request, res: Response): (Promise<Response | void>) => {
@@ -27,14 +27,16 @@ router.get(`${BaseURL}:id`, async (req: Request, res: Response): (Promise<Respon
 
 router.post(BaseURL, async (req: Request, res: Response): Promise<Response> => {
     try {
-        const validatedUser: IUserInput = validate(req.body)
+        const validatedUser: IAuthInput = validate(req.body)
         const existingUser: (IUser | null) = await User.findOne({email: validatedUser.email})
-        if (existingUser) return res.status(409).json({ message: "User with the same email already Registered." })
+        if (!existingUser) return res.status(400).json({ message: "Inavalid email or password." })
 
-        validatedUser.password = await encrpytPassword(validatedUser.password)
-        const user: IUser = await User.create(pick(userReq, validatedUser))
-        await user.save()
-        return res.header('X-Auth-Token', user.generateAuthToken()).status(201).json(pick(userRes, user))
+        const encryption: string = await encrpytPassword(validatedUser.password)
+        const isValidPassword: boolean = await decryptPassword(encryption, validatedUser.password)
+        
+        if (!isValidPassword) return res.status(400).json({message: "Invalid email or password."})
+        const sessionToken: string = existingUser.generateAuthToken()
+        return res.status(201).json({sessionToken})
     }
     catch (error) {
         if(error instanceof ZodError) return res.status(422).json({error})

@@ -1,5 +1,10 @@
 {
     "database": {
         "password": "aqsh-db-password"
+    },
+    "JWTPrivateKey": "AQSH_JWTPrivateKey",
+    "commands": {
+        "one": "set AQSH_JWTPrivateKey=aqsh1234",
+        "two": "set DEBUG=aqsh:*"
     }
 }

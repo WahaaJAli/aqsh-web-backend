@@ -3,9 +3,9 @@
     "database": {
         "name": "Mongoose"
     },
+    "JWTPrivateKey": "JWTPrivateKey",
     "debug": "aqsh:server",
     "command": "set DEBUG=aqsh:server",
-    
     "debug-db": "aqsh:database",
     "command-db": "set DEBUG=aqsh:database",
     "multiple-command": "set DEBUG=aqsh:database,aqsh:server",
