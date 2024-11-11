@@ -6,6 +6,7 @@ import { UserModal as User, validateUser as validate } from "../models/User"
 import { ZodError } from "zod"
 import config from 'config'
 import debugg from 'debug'
+import authenticator from "../middlewares/authenticator"
 
 const router: Router = Router()
 const BaseURL: string = '/'
@@ -19,8 +20,8 @@ router.get(BaseURL, async (_req: Request, res: Response): (Promise<Response | vo
         .catch(error => res.status(error.status).json({error}))
 })
 
-router.get(`${BaseURL}:id`, async (req: Request, res: Response): (Promise<Response | void>) => {
-    await User.findById(req.params.id)
+router.get(`${BaseURL}me`, authenticator, async (req: any, res: Response): (Promise<Response | void>) => {
+    await User.findById(req.user._id).select('-password').lean()
         .then(result => { return res.status(200).json({result}) })
         .catch(error => res.status(error.status).json({error}))
 })

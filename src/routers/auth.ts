@@ -7,7 +7,6 @@ import { validateUser as validate } from "../models/Auth"
 import { ZodError } from "zod"
 import config from 'config'
 import debugg from 'debug'
-import jwt from 'jsonwebtoken'
 
 const router: Router = Router()
 const BaseURL: string = '/'
