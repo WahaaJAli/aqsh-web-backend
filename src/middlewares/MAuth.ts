@@ -12,7 +12,7 @@ import IAuthRequest from '../interfaces/IAuthRequest'
 
 const DEBUG = debugg(config.get('debug'))
 
-const authenticator = async (req: IAuthRequest, res: Response, next: NextFunction): (Promise<void | Response>) => {
+const MAuth = async (req: IAuthRequest, res: Response, next: NextFunction): (Promise<void | Response>) => {
     const token = req.header('X-Auth-Token')
     if (!token) return res.status(401).json({ message: 'Access Denied. No Token Provided.' })
     try {
@@ -23,4 +23,4 @@ const authenticator = async (req: IAuthRequest, res: Response, next: NextFunctio
         return res.status(400).json({ message: 'Invalid Token.' })
     }
 }
-export default authenticator
+export default MAuth

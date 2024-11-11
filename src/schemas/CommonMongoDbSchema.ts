@@ -1,4 +1,4 @@
-import { bankNameRegex, emailRegex, passwordRegex } from "../validators/REGEXP"
+import { bankNameRegex, emailRegex } from "../validators/REGEXP"
 
 const bankName = {
     type: String,
@@ -61,4 +61,10 @@ const username = {
     trim: true,
 }
 
-export { bankName, bankNickname, customerName, dateCreated, email, password, username }
+const isAdmin = {
+    type: Boolean,
+    required: true,
+    default: false,
+}
+
+export { bankName, bankNickname, customerName, dateCreated, email, isAdmin, password, username }

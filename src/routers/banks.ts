@@ -4,13 +4,14 @@ import { ZodError } from 'zod'
 import config from 'config'
 import debugg from 'debug'
 import IBank from '../interfaces/IBank'
-
+import MAdmin from '../middlewares/MAdmin'
+import MAuth from '../middlewares/MAuth'
 
 const router = Router()
 const baseURL = '/'
 const debugDb = debugg(config.get('debug-db'))
 
-router.get(baseURL, async (req: Request, res: Response) => {
+router.get(baseURL, async (_req: Request, res: Response) => {
     // .find({ nickname: { $nin: ['FAYS', 'MUCB'] } })
     // .or([ { nickname: 'FAYS'}, {BIC: 'FAYSPKKA'}])
     // Regular Expression 
@@ -63,7 +64,7 @@ router.put(`${baseURL}:id`, async(req: Request, res: Response) => {
 })
 
 
-router.delete(`${baseURL}:id`, async (req: Request, res: Response) => {
+router.delete(`${baseURL}:id`, [MAuth, MAdmin], async (req: Request, res: Response) => {
     try {
         await Bank.findByIdAndDelete(req.params.id)
         return res.sendStatus(204)
