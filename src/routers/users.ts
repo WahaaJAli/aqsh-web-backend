@@ -7,6 +7,7 @@ import { ZodError } from "zod"
 import config from 'config'
 import debugg from 'debug'
 import authenticator from "../middlewares/authenticator"
+import IAuthRequest from "../interfaces/IAuthRequest"
 
 const router: Router = Router()
 const BaseURL: string = '/'
@@ -20,8 +21,8 @@ router.get(BaseURL, async (_req: Request, res: Response): (Promise<Response | vo
         .catch(error => res.status(error.status).json({error}))
 })
 
-router.get(`${BaseURL}me`, authenticator, async (req: any, res: Response): (Promise<Response | void>) => {
-    await User.findById(req.user._id).select('-password').lean()
+router.get(`${BaseURL}me`, authenticator, async (req: IAuthRequest, res: Response): (Promise<Response | void>) => {
+    await User.findById(req.user?._id).select('-password').lean()
         .then(result => { return res.status(200).json({result}) })
         .catch(error => res.status(error.status).json({error}))
 })
@@ -59,8 +60,8 @@ router.delete(`${BaseURL}:id`, async (req: Request, res: Response): Promise<Resp
     try {
         await User.findByIdAndDelete(req.params.id)
         return res.sendStatus(204)
-        
-    } catch (error) {
+    }
+    catch (error) {
         return res.status(404).json({error})
     }
 })

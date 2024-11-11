@@ -21,9 +21,7 @@ const JWT_KEY: string = config.get('JWTPrivateKey')
 
 server.use(express.json(), express.static('public'), cors(), helmet(), express.urlencoded({extended: true}))
 
-if (!JWT_KEY) {
-    process.exit(1)
-}
+if (!JWT_KEY) { process.exit(1) }
 
 mongoDb.connect(DATABASE)
     .then((): void => DEBUG('Database: Connected to MongoDB'))
@@ -33,9 +31,7 @@ if(server.get(ENVIRONMENT) === 'development') {
     server.use(morgan('dev'))
     DEBUG('Environment: Development')
 }
-else if(server.get(ENVIRONMENT) === 'production') {
-    DEBUG('Environment: Production')
-}
+else if(server.get(ENVIRONMENT) === 'production') { DEBUG('Environment: Production') }
 
 server.use('/', home)
 server.use('/auth', auth)
