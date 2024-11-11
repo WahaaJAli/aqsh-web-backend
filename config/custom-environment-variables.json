@@ -5,6 +5,7 @@
     "JWTPrivateKey": "AQSH_JWTPrivateKey",
     "commands": {
         "one": "set AQSH_JWTPrivateKey=aqsh1234",
-        "two": "set DEBUG=aqsh:*"
+        "two": "set DEBUG=aqsh:*",
+        "three": "set aqsh-db-password=Abcd@0000"
     }
 }

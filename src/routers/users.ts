@@ -8,6 +8,7 @@ import config from 'config'
 import debugg from 'debug'
 import MAuth from "../middlewares/MAuth"
 import IAuthRequest from "../interfaces/IAuthRequest"
+import MAsync from "../middlewares/MAsync"
 
 const router: Router = Router()
 const BaseURL: string = '/'
@@ -15,11 +16,10 @@ const userReq: (keyof IUser)[] = ['username', 'email', 'password']
 const userRes: (keyof IUser)[] = ['_id', 'username', 'email']
 const DEBUG = debugg(config.get('debug'))
 
-router.get(BaseURL, async (_req: Request, res: Response): (Promise<Response | void>) => {
-    await User.find().sort({username: 1}).lean()
-        .then(result => { return res.status(200).json({result}) })
-        .catch(error => res.status(error.status).json({error}))
-})
+router.get(BaseURL, MAsync(async (_req: Request, res: Response) => {
+    const users = await User.find().sort({username: 1}).lean()
+    res.status(200).json({users})
+}))
 
 router.get(`${BaseURL}me`, MAuth, async (req: IAuthRequest, res: Response): (Promise<Response | void>) => {
     await User.findById(req.user?._id).select('-password').lean()
