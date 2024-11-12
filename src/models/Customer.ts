@@ -1,7 +1,7 @@
 import { bankName, bankNickname as nickname, customerName, dateCreated, username } from "../schemas/CommonMongoDbSchema"
 import mongoose, { Schema } from "mongoose"
 import { z } from "zod"
-import ICustomer, { IBank_Customers } from "../interfaces/ICustomer"
+import { ICustomer, IBank_Customers, ICustomerInput } from "../interfaces/ICustomer"
 
 const BankSchema: Schema<IBank_Customers> = new Schema({ bankName, nickname })
 
@@ -41,7 +41,7 @@ const CustomerSchema: Schema<ICustomer> = new Schema({
 
 const CustomerModel = mongoose.model<ICustomer>('Customer', CustomerSchema)
 
-const validateCustomer = (customer: ICustomer) => {
+const validateCustomer = (customer: ICustomerInput): ICustomerInput => {
     const customerSchema = z.object({
         cnic:         z.string().length(15), // Including dashes
         customerName: z.string().min(4).max(40),

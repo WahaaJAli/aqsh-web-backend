@@ -1,10 +1,11 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
+import express, { Application } from 'express'
 import config from 'config'
 import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import debugg from 'debug'
+import 'express-async-errors'
 
 import auth from './src/routers/auth'
 import banks from './src/routers/banks'

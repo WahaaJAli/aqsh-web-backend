@@ -1,9 +1,8 @@
 import { BankModel as Bank, validateBank as validate } from '../models/Bank'
 import { Router, Request, Response } from 'express'
-import { ZodError } from 'zod'
+import {IBank, IBankInput } from '../interfaces/IBank'
 import config from 'config'
 import debugg from 'debug'
-import IBank from '../interfaces/IBank'
 import MAdmin from '../middlewares/MAdmin'
 import MAuth from '../middlewares/MAuth'
 
@@ -11,7 +10,7 @@ const router = Router()
 const baseURL = '/'
 const debugDb = debugg(config.get('debug-db'))
 
-router.get(baseURL, async (_req: Request, res: Response) => {
+router.get(baseURL, async (_req: Request, res: Response): Promise<Response> => {
     // .find({ nickname: { $nin: ['FAYS', 'MUCB'] } })
     // .or([ { nickname: 'FAYS'}, {BIC: 'FAYSPKKA'}])
     // Regular Expression 
@@ -21,57 +20,40 @@ router.get(baseURL, async (_req: Request, res: Response) => {
     // .limit(pageSize)
 
     // mongoimport --db dbName --collection collectionName --file fileName.json --jsonArray
-    await Bank.find({bic: /PKKA$/i}).sort({bankName: 1}).lean()
-        .then(result => res.status(200).json(result))
-        .catch(error => res.status(error.status).json({error}))
+    const banks: IBank[] = await Bank.find({bic: /PKKA$/i}).sort({bankName: 1}).lean()
+    return res.status(200).json(banks)
 })
 
 
-router.get(`${baseURL}:id`, async (req: Request, res: Response) => {
-    await Bank.findById(req.params.id)
-        .then(result => res.status(200).json(result))
-        .catch(error => res.status(error.status).json({error}))
+router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Response> => {
+    const bank: (IBank | null) = await Bank.findById(req.params.id).lean()
+    return res.status(200).json(bank)
 })
 
 
-router.post(baseURL, async (req: Request, res: Response) => {
-    try {
-        validate(req.body)
-        const existingBank: (IBank | null) = await Bank.findOne({nickname: req.body.nickname})
-        if (existingBank) return res.status(409).json({ message: "Bank with the same Nickname already exists." })
+router.post(baseURL, async (req: Request, res: Response): Promise<Response> => {
+    const validatedBank: IBankInput = validate(req.body)
+    const existingBank: (IBank | null) = await Bank.findOne({nickname: validatedBank.nickname})
+    if (existingBank) return res.status(409).json({ message: "Bank with the same Nickname already exists." })
 
-        const bank: IBank = await Bank.create(req.body)
-        await bank.save()
-        return res.status(200).json(bank)
-    }
-    catch (error) {
-        if(error instanceof ZodError) return res.status(422).json({error})
-        else return res.status(404).json({error})
-    }
+    const bank: IBank = await Bank.create(validatedBank)
+    await bank.save()
+    return res.status(200).json(bank)
 })
 
 
-router.put(`${baseURL}:id`, async(req: Request, res: Response) => {
-    try {
-        validate(req.body)
-        await Bank.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        return res.sendStatus(204)
-    }
-    catch (error) {
-        if(error instanceof ZodError) return res.status(422).json({error})
-        else return res.status(404).json({error})
-    }
+router.put(`${baseURL}:id`, async(req: Request, res: Response): Promise<Response> => {
+    const validatedBank: IBankInput = validate(req.body)
+    const bank: (IBank | null) = await Bank.findByIdAndUpdate(req.params.id, validatedBank, {new: true})
+    if (!bank) return res.status(404).json({ message: "Bank not found." })
+    return res.sendStatus(204)
 })
 
 
-router.delete(`${baseURL}:id`, [MAuth, MAdmin], async (req: Request, res: Response) => {
-    try {
-        await Bank.findByIdAndDelete(req.params.id)
-        return res.sendStatus(204)
-    }
-    catch (error) {
-        return res.status(404).json({error})
-    }
+router.delete(`${baseURL}:id`, [MAuth, MAdmin], async (req: Request, res: Response): Promise<Response> => {
+    const bank: (IBank | null) = await Bank.findByIdAndDelete(req.params.id)
+    if (!bank) return res.status(404).json({ message: "Bank not found." })
+    return res.sendStatus(204)
 })
 
 export default router
