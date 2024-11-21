@@ -1,5 +1,5 @@
 import { Date, Document, Types } from "mongoose"
-import ICustomer from "./ICustomer"
+import { ICustomer } from "./ICustomer"
 
 export type ICustomer_Bank = Readonly<Pick<ICustomer, 'customerName' | 'username'>>
 export interface IBank extends Document {
