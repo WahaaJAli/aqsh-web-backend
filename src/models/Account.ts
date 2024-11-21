@@ -1,5 +1,5 @@
 import { z } from "zod"
-import IAccount from "../interfaces/IAccount"
+import { IAccount } from "../interfaces/IAccount"
 import mongoose from "mongoose"
 
 const AccountSchema = new mongoose.Schema({

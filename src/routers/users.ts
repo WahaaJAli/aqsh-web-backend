@@ -15,12 +15,12 @@ const userRes: (keyof IUser)[] = ['_id', 'username', 'email']
 const DEBUG = debugg(config.get('debug'))
 
 router.get(BaseURL, async (_req: Request, res: Response): Promise<Response> => {
-    const users: IUser[] = await User.find().sort({username: 1}).lean()
+    const users: IUser[] = await User.find().sort({username: 1}).lean<IUser[]>()
     return res.status(200).json({users})
 })
 
 router.get(`${BaseURL}me`, MAuth, async (req: IAuthRequest, res: Response): Promise<Response> => {
-    const user: (IUser | null) = await User.findById(req.user?._id).select('-password').lean()
+    const user: (IUser | null) = await User.findById(req.user?._id).select('-password').lean<IUser>()
     return res.status(200).json({user})
 })
 

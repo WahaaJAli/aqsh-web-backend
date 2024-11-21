@@ -20,13 +20,13 @@ router.get(baseURL, async (_req: Request, res: Response): Promise<Response> => {
     // .limit(pageSize)
 
     // mongoimport --db dbName --collection collectionName --file fileName.json --jsonArray
-    const banks: IBank[] = await Bank.find({bic: /PKKA$/i}).sort({bankName: 1}).lean()
+    const banks: IBank[] = await Bank.find({bic: /PKKA$/i}).sort({bankName: 1}).lean<IBank[]>()
     return res.status(200).json(banks)
 })
 
 
 router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Response> => {
-    const bank: (IBank | null) = await Bank.findById(req.params.id).lean()
+    const bank: (IBank | null) = await Bank.findById(req.params.id).lean<IBank>()
     return res.status(200).json(bank)
 })
 

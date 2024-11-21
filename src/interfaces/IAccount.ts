@@ -1,8 +1,8 @@
 import { Date, Document, Types } from "mongoose";
-import IBank from "./IBank";
-import ICustomer from "./ICustomer";
+import { IBank } from "./IBank";
+import { ICustomer } from "./ICustomer";
 
-export default interface IAccount extends Document {
+export interface IAccount extends Document {
     _id: Types.ObjectId
     accountId: number
     accountTitle: string

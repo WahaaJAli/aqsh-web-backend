@@ -6,7 +6,7 @@ const router = Router()
 const baseURL = '/'
 
 router.get(baseURL, async (_req: Request, res: Response): Promise<Response> => {
-    const customers: ICustomer[] = await Customer.find().sort({ customerName: 1 }).lean()
+    const customers: ICustomer[] = await Customer.find().sort({ customerName: 1 }).lean<ICustomer[]>()
     return res.status(200).json(customers)
 })
 

@@ -18,9 +18,10 @@ interface CustomError extends Error {
 
 const DEBUG = debugg(config.get<string>("debug"))
 
-const MError: ErrorRequestHandler = (error: CustomError, _req: Request, res: Response, _next: NextFunction): Response => {
-    if (error instanceof ZodError) { return res.status(422).json({message: error.message}) }
-    return res.status(error.status || 500).json({ message: error.message })
+const MError: ErrorRequestHandler = (error: CustomError, _req: Request, res: Response, _next: NextFunction) => {
+    if (error instanceof ZodError) { res.status(422).json({message: error.message}) }
+    res.status(error.status || 500).json({ message: error.message })
+    return
 }
 
 export default MError

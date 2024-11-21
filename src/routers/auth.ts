@@ -12,7 +12,7 @@ const BaseURL: string = '/'
 const DEBUG = debugg(config.get('debug'))
 
 router.get(BaseURL, async (_req: Request, res: Response): Promise<Response> => {
-    const auth: IAuth[] = await User.find().sort({username: 1}).lean()
+    const auth: IAuth[] = await User.find().sort({username: 1}).lean<IAuth[]>()
     return res.status(200).json({auth})
 })
 
