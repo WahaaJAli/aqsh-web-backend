@@ -1,0 +1,4 @@
+{
+  "JWTPrivateKey": "test-private-key",
+  "DATABASE": "test-database-uri"
+}
