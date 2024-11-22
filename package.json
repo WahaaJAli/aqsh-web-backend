@@ -4,9 +4,7 @@
   "description": "The Backend for The AQSH Premier Islamic Banking",
   "main": "server.ts",
   "scripts": {
-    "start": "node server.ts",
     "dev": "nodemon server.ts",
-    "comment": "set NODE_ENV=development || set NODE_ENV=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

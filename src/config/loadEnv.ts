@@ -16,8 +16,8 @@ const variables = ['DATABASE_CONNECTION', 'DEBUG', 'ENVIRONMENT', 'JWT_PRIVATE_K
 const validate = () => {
     const missingVars = variables.filter((variable) => !process.env[variable])
     if (missingVars.length > 0) {
-        logger.error(`Missing environment variables: ${missingVars.join(', ')}`)
-        process.exit(1)
+      logger.error(`Missing environment variables: ${missingVars.join(', ')}`)
+      process.exit(1)
     }
 }
 validate()
