@@ -1,4 +1,4 @@
-import { DATABASE } from '../config/Environment'
+import config from '../config/Environment'
 import logger from '../utils/logger'
 import mongoose from 'mongoose'
 
@@ -6,7 +6,7 @@ mongoose.connection.on('disconnected', () => logger.info('MongoDB connection clo
 
 export default async (): Promise<void> => {
   try {
-    await mongoose.connect(DATABASE)
+    await mongoose.connect(config.DATABASE!)
     logger.info('Database: Connected to MongoDB')
   }
   catch (error) {

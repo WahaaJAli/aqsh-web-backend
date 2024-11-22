@@ -1,13 +1,28 @@
-const DATABASE_PASSWORD = process.env.AQSH_DB_PASSWORD || ''
-const DATABASE = process.env.DATABASE_CONNECTION?.replace('<password>', DATABASE_PASSWORD) || ''
-const DEBUG = process.env.DEBUG || ''
-const JWT_KEY = process.env.JWT_PRIVATE_KEY || ''
-const ENVIRONMENT = process.env.ENVIRONMENT || 'development'
-const PORT = Number(process.env.PORT) || 2123
+import dotenv from 'dotenv'
+import path from 'path'
 
-if (!JWT_KEY) {
-  console.error('Error: Missing JWTPrivateKey in environment variables.')
-  process.exit(1)
+// Load the .env file based on the environment (default to 'development')
+const ENV = process.env.ENVIRONMENT || 'development'
+dotenv.config({ path: path.resolve(__dirname, `../../.env.${ENV}`) })
+
+const REQUIRED_VARS = ['DATABASE_CONNECTION', 'JWT_PRIVATE_KEY', 'PORT']
+
+const validateEnv = () => {
+  const missing = REQUIRED_VARS.filter(key => !process.env[key])
+  if (missing.length) {
+    console.error(`Missing environment variables: ${missing.join(', ')}`)
+    process.exit(1)
+  }
+}
+validateEnv()
+
+const config = {
+  DATABASE: process.env.DATABASE_CONNECTION?.replace('<password>', process.env.AQSH_DB_PASSWORD!),
+  DEBUG: process.env.DEBUG!,
+  ENVIRONMENT: ENV!,
+  JWT_KEY: process.env.JWT_PRIVATE_KEY!,
+  LOG_LEVEL: process.env.LOG_LEVEL!,
+  PORT: Number(process.env.PORT!)
 }
 
-export { DATABASE, PORT, ENVIRONMENT, JWT_KEY, DEBUG }
+export default config

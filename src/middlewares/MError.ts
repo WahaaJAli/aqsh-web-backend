@@ -1,8 +1,6 @@
 import { ErrorRequestHandler } from 'express'
 import { Request, Response, NextFunction } from "express"
 import { ZodError } from "zod"
-import config from "config"
-import debugg from "debug"
 
 /**
  * Global error handling middleware.
@@ -15,8 +13,6 @@ import debugg from "debug"
 interface CustomError extends Error {
     status?: number
 }
-
-const DEBUG = debugg(config.get<string>("debug"))
 
 const MError: ErrorRequestHandler = (error: CustomError, _req: Request, res: Response, _next: NextFunction) => {
     if (error instanceof ZodError) { res.status(422).json({message: error.message}) }

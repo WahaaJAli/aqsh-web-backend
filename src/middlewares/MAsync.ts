@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction, RequestHandler } from "express"
-import config from "config"
-import debugg from "debug"
-
-const DEBUG = debugg(config.get<string>("debug"))
+import debug from 'debug'
+import config from "../config/Environment"
+import logger from "../utils/logger"
 
 /**
  * Async middleware wrapper to handle errors.
  * @param handler - The async route handler to wrap.
  * @returns An Express request handler.
  */
+
+const DEBUG = debug(config.DEBUG)
 
 const MAsync = (handler: (req: Request, res: Response, next: NextFunction) => Promise<void>): RequestHandler => {
   return async (req, res, next) => {
@@ -17,6 +18,7 @@ const MAsync = (handler: (req: Request, res: Response, next: NextFunction) => Pr
     } 
     catch (error) {
       DEBUG("Async error:", error)
+      logger.error("Async error:", error)
       next(error)
     }
   }

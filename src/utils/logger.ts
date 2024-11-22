@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston'
-import config from 'config'
 import mongoose from 'mongoose'
+import config from '../config/Environment'
 
 const { combine, timestamp, printf, colorize, errors } = format
 
@@ -9,7 +9,7 @@ const logFormat = printf(({ level, message, timestamp, stack }) => {
 })
 
 const logger = createLogger({
-    level: config.get<string>('log.level') || 'info',
+    level: config.LOG_LEVEL || 'info',
     format: combine(
         colorize(),
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),

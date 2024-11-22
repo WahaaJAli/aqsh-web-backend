@@ -1,14 +1,11 @@
 import { BankModel as Bank, validateBank as validate } from '../models/Bank'
 import { Router, Request, Response } from 'express'
 import {IBank, IBankInput } from '../interfaces/IBank'
-import config from 'config'
-import debugg from 'debug'
 import MAdmin from '../middlewares/MAdmin'
 import MAuth from '../middlewares/MAuth'
 
 const router = Router()
 const baseURL = '/'
-const debugDb = debugg(config.get('debug-db'))
 
 router.get(baseURL, async (_req: Request, res: Response): Promise<Response> => {
     // .find({ nickname: { $nin: ['FAYS', 'MUCB'] } })

@@ -1,8 +1,5 @@
-import config from 'config'
-import debugg from 'debug'
 import { Router } from 'express'
 
-const debug = debugg(config.get('debug'))
 const router = Router()
 
 interface User {
@@ -13,7 +10,6 @@ interface User {
 const getUser = (id:number) => {
     return new Promise<User>((resolve, reject) => {
         setTimeout(() => {
-            debug('Getting user from database...')
             const user = {id: id, githubRepoName: 'wahaj'}
             resolve(user)
         }, 1000)
@@ -23,7 +19,6 @@ const getUser = (id:number) => {
 const getRepo = (githubRepoName: string) => {
     return new Promise<string[]>((resolve, reject) => {
         setTimeout(() => {
-            debug(`Getting list of repositories for user: ${githubRepoName}`)
             const repos = ['Repo1', 'Repo2', 'Repo3', 'Repo4', 'Repo5']
             resolve(repos)
         }, 1000)
@@ -33,7 +28,6 @@ const getRepo = (githubRepoName: string) => {
 const getCommits = (repo: string) => {
     return new Promise<string[]>((resolve, reject) => {
         setTimeout(() => {
-            debug(`Getting list of commits for repo: ${repo}`)
             const commits = ['commit 7890', 'commit 6721', 'commit 4789', 'commit 1092', 'commit 9760']
             resolve(commits)
         }, 1000);
@@ -46,7 +40,6 @@ router.get('/', (req, response) => {
       .then(user => getRepo(user.githubRepoName))
       .then(repos => getCommits(repos[0]))
       .then(commits => response.status(200).send(commits.join(', ')))
-      .catch(err => debug(`Error: ${err}`))
 })
 
 export default router

@@ -1,4 +1,4 @@
-import { ENVIRONMENT } from '../config/Environment'
+import config from '../config/Environment'
 import cors from 'cors'
 import express, { Application } from 'express'
 import helmet from 'helmet'
@@ -11,7 +11,7 @@ const middleware = (server: Application): void => {
   server.use(helmet())
   server.use(express.urlencoded({ extended: true }))
 
-  if (ENVIRONMENT === 'development') { server.use(morgan('dev')) }
+  if (config.ENVIRONMENT === 'development') { server.use(morgan('dev')) }
 }
 
 export default middleware

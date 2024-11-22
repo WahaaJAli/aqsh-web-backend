@@ -1,5 +1,4 @@
-import './src/config/loadEnv'
-import { PORT } from './src/config/Environment'
+import config from './src/config/Environment'
 import app from './app'
 import connectToDatabase from './src/start/mongoose'
 import logger from './src/utils/logger'
@@ -8,7 +7,7 @@ import mongoose from 'mongoose'
 const startServer = async (): Promise<void> => {
   try {
     await connectToDatabase()
-    const server = app.listen(PORT, () => logger.info(`Server started on port ${PORT}`))
+    const server = app.listen(config.PORT, () => logger.info(`Server started on port ${config.PORT}`))
 
     const gracefulShutdown = async () => {
         try {

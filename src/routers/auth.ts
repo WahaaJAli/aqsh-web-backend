@@ -4,12 +4,9 @@ import { IUser } from "../interfaces/IUser"
 import { Router, Request, Response } from "express"
 import { UserModal as User } from "../models/User"
 import { validateUser as validate } from "../models/Auth"
-import config from 'config'
-import debugg from 'debug'
 
 const router: Router = Router()
 const BaseURL: string = '/'
-const DEBUG = debugg(config.get('debug'))
 
 router.get(BaseURL, async (_req: Request, res: Response): Promise<Response> => {
     const auth: IAuth[] = await User.find().sort({username: 1}).lean<IAuth[]>()

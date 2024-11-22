@@ -3,8 +3,6 @@ import { IUser, IUserInput } from "../interfaces/IUser"
 import { pick } from "rambda"
 import { Router, Request, Response } from "express"
 import { UserModal as User, validateUser as validate } from "../models/User"
-import config from 'config'
-import debugg from 'debug'
 import IAuthRequest from "../interfaces/IAuthRequest"
 import MAuth from "../middlewares/MAuth"
 
@@ -12,7 +10,6 @@ const router: Router = Router()
 const BaseURL: string = '/'
 const userReq: (keyof IUser)[] = ['username', 'email', 'password']
 const userRes: (keyof IUser)[] = ['_id', 'username', 'email']
-const DEBUG = debugg(config.get('debug'))
 
 router.get(BaseURL, async (_req: Request, res: Response): Promise<Response> => {
     const users: IUser[] = await User.find().sort({username: 1}).lean<IUser[]>()
