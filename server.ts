@@ -45,3 +45,6 @@ process.on('uncaughtException', (error: Error) => {
   logger.error(`Uncaught Exception: ${error.message}`, {stack: error.stack})
   process.exit(1)
 })
+
+// netstat -aon | findstr :2123
+// taskkill /F /PID <PID>
