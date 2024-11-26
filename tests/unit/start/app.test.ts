@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../../app'
+import app from '../../../src/start/app'
 
 describe('Test the root path', () => {
   it('should return 200 OK for the root route', async () => {

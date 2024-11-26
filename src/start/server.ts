@@ -1,7 +1,7 @@
-import config from './src/config/Environment'
+import config from '../config/Environment'
 import app from './app'
-import connectToDatabase from './src/start/mongoose'
-import logger from './src/utils/logger'
+import connectToDatabase from './mongoose'
+import logger from '../utils/logger'
 import mongoose from 'mongoose'
  
 const startServer = async (): Promise<void> => {

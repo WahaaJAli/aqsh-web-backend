@@ -1,4 +1,4 @@
-import { emailSchema, passwordSchema } from "../../src/schemas/CommonZodSchema"
+import { emailSchema, passwordSchema } from "../../../src/schemas/CommonZodSchema"
 
 describe("commonZodSchemas", () => {
   describe("emailSchema", () => {

@@ -1,8 +1,8 @@
-import errorHandler from './src/middlewares/MError'
+import errorHandler from '../middlewares/MError'
 import express, { Application } from 'express'
-import loadMiddlewares from './src/start/middleware'
-import loadRoutes from './src/start/routes'
-import limiter from './src/middlewares/MRateLimiter'
+import loadMiddlewares from './middleware'
+import loadRoutes from './routes'
+import limiter from '../middlewares/MRateLimiter'
 import helmet from 'helmet'
 
 const app: Application = express()
