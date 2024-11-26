@@ -14,4 +14,5 @@ export interface IUserInput {
     email: string
     password: string
     username: string
+    isAdmin: boolean
 }

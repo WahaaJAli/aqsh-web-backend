@@ -5,10 +5,15 @@ import mongoose from 'mongoose'
 let mongo: MongoMemoryServer
 
 beforeAll(async () => {
-  mongo = await MongoMemoryServer.create()
-  const uri = mongo.getUri()
-
-  await mongoose.connect(uri)
+  try {
+    mongo = await MongoMemoryServer.create()
+    const uri = mongo.getUri()
+    await mongoose.connect(uri)
+  }
+  catch (error) {
+    console.error('Error connecting to in-memory MongoDB:', error)
+    process.exit(1)
+  }
 })
 
 afterEach(async () => {

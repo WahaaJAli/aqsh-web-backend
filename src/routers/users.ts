@@ -8,8 +8,9 @@ import MAuth from "../middlewares/MAuth"
 
 const router: Router = Router()
 const BaseURL: string = '/'
-const userReq: (keyof IUser)[] = ['username', 'email', 'password']
-const userRes: (keyof IUser)[] = ['_id', 'username', 'email']
+const userCommon: (keyof IUser)[] = ['username', 'email', 'isAdmin']
+const userReq: (keyof IUser)[] = [...userCommon, 'password']
+const userRes: (keyof IUser)[] = [...userCommon, '_id']
 
 router.get(BaseURL, async (_req: Request, res: Response): Promise<Response> => {
     const users: IUser[] = await User.find().sort({username: 1}).lean<IUser[]>()

@@ -1,4 +1,4 @@
-import app from "./setup"
+import app from "../setup"
 import request from "supertest"
 
 describe("Users Endpoint Integration Tests", () => {
@@ -8,6 +8,7 @@ describe("Users Endpoint Integration Tests", () => {
     username: "testuser",
     email: "testuser@example.com",
     password: "Test@1234",
+    isAdmin: false,
   }
 
   const adminPayload = {

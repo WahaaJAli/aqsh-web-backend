@@ -64,7 +64,6 @@ const username = {
 const isAdmin = {
     type: Boolean,
     required: true,
-    default: false,
 }
 
 export { bankName, bankNickname, customerName, dateCreated, email, isAdmin, password, username }

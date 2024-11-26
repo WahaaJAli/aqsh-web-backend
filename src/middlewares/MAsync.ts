@@ -1,27 +1,6 @@
-import { Request, Response, NextFunction, RequestHandler } from "express"
-import debug from 'debug'
-import config from "../config/Environment"
-import logger from "../utils/logger"
+import { NextFunction, Request, Response } from 'express'
 
-/**
- * Async middleware wrapper to handle errors.
- * @param handler - The async route handler to wrap.
- * @returns An Express request handler.
- */
-
-const DEBUG = debug(config.DEBUG)
-
-const MAsync = (handler: (req: Request, res: Response, next: NextFunction) => Promise<void>): RequestHandler => {
-  return async (req, res, next) => {
-    try {
-      await handler(req, res, next)
-    } 
-    catch (error) {
-      DEBUG("Async error:", error)
-      logger.error("Async error:", error)
-      next(error)
-    }
-  }
-}
+const MAsync = (fn: (req: Request, res: Response, next: NextFunction) => Promise<any>) =>
+  (req: Request, res: Response, next: NextFunction) => Promise.resolve(fn(req, res, next)).catch(next)
 
 export default MAsync

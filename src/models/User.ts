@@ -18,6 +18,7 @@ const validateUser = (user: IUserInput): IUserInput => {
     const userSchema = z.object({
         username: z.string().trim().min(8).max(40),
         email: emailSchema,
+        isAdmin: z.boolean(),
         password: passwordSchema
     })
     return userSchema.parse(user)
