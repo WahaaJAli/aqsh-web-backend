@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "dev": "nodemon server.ts",
-    "test": "jest",
+    "test": "jest --watch",
     "setD": "set NODE_ENV=development",
     "setT": "set NODE_ENV=test"
   },
