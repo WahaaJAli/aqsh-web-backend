@@ -4,7 +4,9 @@
   "description": "The Backend for The AQSH Premier Islamic Banking",
   "main": "server.ts",
   "scripts": {
-    "dev": "nodemon server.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon",
     "test": "jest --watchAll --verbose",
     "setD": "set NODE_ENV=development",
     "setT": "set NODE_ENV=test"
