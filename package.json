@@ -7,9 +7,7 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon",
-    "test": "jest --watchAll --verbose",
-    "setD": "set NODE_ENV=development",
-    "setT": "set NODE_ENV=test"
+    "test": "jest --watchAll --verbose"
   },
   "repository": {
     "type": "git",
