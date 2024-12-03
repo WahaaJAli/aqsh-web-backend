@@ -17,7 +17,8 @@ const validateEnv = () => {
 validateEnv()
 
 const config = {
-  DATABASE: process.env.DATABASE_CONNECTION?.replace('<password>', process.env.AQSH_DB_PASSWORD!),
+  CLIENT: process.env.CLIENT!,
+  DATABASE: process.env.DATABASE_CONNECTION!,
   DEBUG: process.env.DEBUG!,
   ENVIRONMENT: ENV!,
   JWT_KEY: process.env.JWT_PRIVATE_KEY!,

@@ -7,10 +7,10 @@ import morgan from 'morgan'
 const middleware = (server: Application): void => {
   server.use(express.json())
   server.use(express.static('public'))
-  server.use(cors())
+  server.use(cors({ origin: config.CLIENT }));
   server.use(helmet())
   server.use(express.urlencoded({ extended: true }))
-
+  console.log('CORS Origin:', config.CLIENT)
   if (config.ENVIRONMENT === 'development') { server.use(morgan('dev')) }
 }
 
