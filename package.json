@@ -4,7 +4,8 @@
   "description": "The Backend for The AQSH Premier Islamic Banking",
   "main": "server.ts",
   "scripts": {
-    "start": "node dist/index.js",
+    "vercel-build": "ts-node src/start/server.ts",
+    "start": "ts-node src/start/server.ts",
     "build": "tsc",
     "dev": "nodemon",
     "test": "jest --watchAll --verbose"
@@ -13,8 +14,13 @@
     "type": "git",
     "url": "git+https://acetechnologies1-admin@bitbucket.org/acetechnologies1/aqsh-web-backend.git"
   },
-  "keywords": [],
-  "author": "aqsh",
+  "keywords": [ "mern", "typescript", "nodejs", "express", "mongodb", "mongoose", 
+    "ts-node", "jest", "unit-testing", "integration-testing", "backend", "api", 
+    "islamic-banking", "vercel","mongodb-atlas", "aqsh", "banking", "secure-backend",
+    "async-errors", "rate-limiting", "jwt-authentication", "password-hashing", 
+    "zod-validation", "environment-variables"
+  ],
+  "author": "aqsh-studios",
   "license": "ISC",
   "bugs": {
     "url": "https://bitbucket.org/acetechnologies1/aqsh-web-backend/issues"
