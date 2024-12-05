@@ -14,11 +14,11 @@
     "type": "git",
     "url": "git+https://acetechnologies1-admin@bitbucket.org/acetechnologies1/aqsh-web-backend.git"
   },
-  "keywords": [ "mern", "typescript", "nodejs", "express", "mongodb", "mongoose", 
-    "ts-node", "jest", "unit-testing", "integration-testing", "backend", "api", 
-    "islamic-banking", "vercel","mongodb-atlas", "aqsh", "banking", "secure-backend",
-    "async-errors", "rate-limiting", "jwt-authentication", "password-hashing", 
-    "zod-validation", "environment-variables"
+  "keywords": ["api", "aqsh", "async-errors", "backend", "banking", "environment-variables",
+    "express", "integration-testing", "islamic-banking", "jest", "jwt-authentication", 
+    "mern", "mongodb-atlas", "mongodb", "mongoose", "nodejs", "password-hashing",
+    "rate-limiting", "secure-backend", "ts-node", "typescript", "unit-testing",
+    "vercel", "zod-validation"
   ],
   "author": "aqsh-studios",
   "license": "ISC",
@@ -43,7 +43,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@types/mongodb": "^4.0.6",
