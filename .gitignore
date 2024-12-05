@@ -80,7 +80,6 @@ Thumbs.db
 
 # production
 /build
-vercel.json
 
 # misc
 .env
