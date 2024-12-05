@@ -14,13 +14,7 @@ const startServer = async (): Promise<void> => {
         logger.info('Server shutting down...')
         await Promise.all([
           mongoose.connection.close().then(() => logger.info('Database connection closed.')),
-          new Promise<void>((resolve, reject) => {
-            server.close((err) => {
-              if (err) return reject(err)
-              logger.info('HTTP server closed.')
-              resolve()
-            })
-          })
+          new Promise<void>((resolve, reject) => server.close(err => err ? reject(err) : (logger.info('HTTP server closed.') || resolve())))
         ])
         process.exit(0)
       }
