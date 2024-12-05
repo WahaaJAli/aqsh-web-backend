@@ -4,10 +4,20 @@
     {
       "src": "src/start/server.ts",
       "use": "@vercel/node",
-      "config": { "includeFiles": ["src/**/*.ts"] }
+      "config": {
+        "includeFiles": ["src/**/*.ts", "package.json", "tsconfig.json"]
+      }
     }
   ],
+  "env": {
+    "DATABASE_CONNECTION": "@mongodb-connection",
+    "JWT_PRIVATE_KEY": "@jwt-private-key",
+    "CLIENT": "https://aqsh-bank.vercel.app"
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "src/start/server.ts" }
+    {
+      "src": "/(.*)",
+      "dest": "/src/start/server.ts"
+    }
   ]
 }

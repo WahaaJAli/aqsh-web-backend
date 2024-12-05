@@ -4,7 +4,6 @@
   "description": "The Backend for The AQSH Premier Islamic Banking",
   "main": "server.ts",
   "scripts": {
-    "vercel-build": "ts-node src/start/server.ts",
     "start": "ts-node src/start/server.ts",
     "build": "tsc",
     "dev": "nodemon",
@@ -47,6 +46,7 @@
   },
   "dependencies": {
     "@types/mongodb": "^4.0.6",
+    "@vercel/node": "^3.2.28",
     "argon2": "^0.41.1",
     "cors": "^2.8.5",
     "debug": "^4.3.7",
