@@ -6,7 +6,7 @@ import morgan from 'morgan'
 
 const middleware = (server: Application): void => {
   server.use(express.json())
-  server.use(cors({ origin: config.CLIENT }))
+  server.use(cors({ origin: '*', credentials: true, methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS' }))
   server.use(helmet({ crossOriginEmbedderPolicy: false }))
   server.use(express.urlencoded({ extended: true }))
   
