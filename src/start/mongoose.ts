@@ -4,10 +4,10 @@ import mongoose, { Mongoose } from 'mongoose'
 
 mongoose.connection.on('disconnected', () => logger.info('MongoDB connection closed.') )
 
-export default async (): Promise<void> => {
+export default async () => {
   try {
-    const { connection: { host } }: Mongoose = await mongoose.connect(config.DATABASE!)
-    logger.info(`MongoDB Connected: ${host}`)
+    mongoose.connect(config.DATABASE!)
+    logger.info(`MongoDB Connected: 2222`)
   }
   catch (error) {
     logger.error(`Database connection error: ${(error as Error).message}`)

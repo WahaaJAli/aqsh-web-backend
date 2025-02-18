@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 
 const startServer = async (): Promise<void> => {
   try {
-    await connectToDatabase()
+    connectToDatabase()
     const server = app.listen(config.PORT, () => logger.info(`Server started on port ${config.PORT}`))
 
     const gracefulShutdown = async () => {
