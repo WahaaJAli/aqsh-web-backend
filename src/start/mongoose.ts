@@ -6,8 +6,11 @@ mongoose.connection.on('disconnected', () => logger.info('MongoDB connection clo
 
 export default async () => {
   try {
-    mongoose.connect(config.DATABASE!)
-    logger.info(`MongoDB Connected: 2222`)
+    const { connection: { host } }: Mongoose = await mongoose.connect(config.DATABASE!, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    })
+    logger.info(`MongoDB Connected: ${host}`)
   }
   catch (error) {
     logger.error(`Database connection error: ${(error as Error).message}`)

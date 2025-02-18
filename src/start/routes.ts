@@ -7,7 +7,7 @@ import home from '../routers/home'
 import promise from '../routers/promise'
 import users from '../routers/users'
 
-export default function modules(server: Application) {
+const routes = (server: Application): void => {
     server.use('/', home)
     server.use('/auth', auth)
     server.use('/banks', banks)
@@ -15,3 +15,5 @@ export default function modules(server: Application) {
     server.use('/promise', promise)
     server.use('/users', users)
 }
+
+export default routes

@@ -4,9 +4,9 @@ import express, { Application } from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
 
-const middleware = (server: Application): void => {
+const middlewares = (server: Application): void => {
+  server.use(cors({ origin: config.CLIENT, credentials: true, methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS' }))
   server.use(express.json())
-  server.use(cors({ origin: '*', credentials: true, methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS' }))
   server.use(helmet({ crossOriginEmbedderPolicy: false }))
   server.use(express.urlencoded({ extended: true }))
   
@@ -14,4 +14,4 @@ const middleware = (server: Application): void => {
   if (config.ENVIRONMENT === 'development') { server.use(morgan('dev')) }
 }
 
-export default middleware
+export default middlewares
