@@ -8,12 +8,6 @@ const router = Router()
 const baseURL = '/'
 
 router.get(baseURL, async (req: Request, res: Response): Promise<Response> => {
-  // .find({ nickname: { $nin: ['FAYS', 'MUCB'] } })
-  // .or([ { nickname: 'FAYS'}, {BIC: 'FAYSPKKA'}])
-  // Regular Expression 
-  // .find({ nickname: /^Startswith, Endswith$, .*Between.*/i(case Insensitive)})
-
-  // mongoimport --db dbName --collection collectionName --file fileName.json --jsonArray
   const currentPage = parseInt(req.query.page as string) || 1
   const pageSize = parseInt(req.query.pageSize as string) || 10
   const criteria = { bic: /PKKA$/i }
@@ -22,10 +16,10 @@ router.get(baseURL, async (req: Request, res: Response): Promise<Response> => {
   const totalBanks = await Bank.countDocuments(criteria)
 
   const totalPages = Math.ceil(totalBanks / pageSize)
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null
 
-  return res.status(200).json({ banks, totalBanks, totalPages, currentPage })
+  return res.status(200).json({ banks, totalBanks, currentPage, nextPage, totalPages })
 })
-
 
 router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Response> => {
   const bank: (IBank | null) = await Bank.findById(req.params.id).lean<IBank>()
