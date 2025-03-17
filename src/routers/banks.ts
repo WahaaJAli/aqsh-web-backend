@@ -8,17 +8,20 @@ const router = Router()
 const baseURL = '/'
 
 router.get(baseURL, async (req: Request, res: Response): Promise<Response> => {
-  const currentPage = parseInt(req.query.page as string) || 1
-  const pageSize = parseInt(req.query.pageSize as string) || 10
+  const { pageParam, pageSize } = req.query
   const criteria = { bic: /PKKA$/i }
 
-  const banks: IBank[] = await Bank.find(criteria).sort({bankName: 1}).skip((currentPage - 1)*pageSize).limit(pageSize).lean<IBank[]>()
+  const currentPage = Number(pageParam) || 1
+  const limit = Number(pageSize) || 10
+  const skip = (currentPage - 1) * limit
+
+  const banks: IBank[] = await Bank.find(criteria).sort({bankName: 1}).skip(skip).limit(limit)
   const totalBanks = await Bank.countDocuments(criteria)
+  
+  const totalPages = Math.ceil(totalBanks / limit)
+  const nextPage = (currentPage * limit < totalBanks) ? (currentPage + 1) : null
 
-  const totalPages = Math.ceil(totalBanks / pageSize)
-  const nextPage = currentPage < totalPages ? currentPage + 1 : null
-
-  return res.status(200).json({ banks, totalBanks, currentPage, nextPage, totalPages })
+  return res.status(200).json(pageParam ? {banks, totalBanks, currentPage, nextPage, totalPages} : {banks})
 })
 
 router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Response> => {
