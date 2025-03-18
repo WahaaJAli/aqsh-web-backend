@@ -32,7 +32,7 @@ router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Respons
 
 router.post(baseURL, async (req: Request, res: Response): Promise<Response> => {
   const validatedBank: IBankInput = validate(req.body)
-  const existingBank: (IBank | null) = await Bank.findOne({ nickname: validatedBank.nickname })
+  const existingBank: IBank | null = await Bank.findOne({$or: [{ nickname: validatedBank.nickname }, { bankName: validatedBank.bankName }]})
   if (existingBank) return res.status(409).json({ message: "Bank with the same Nickname already exists." })
 
   const bank: IBank = await Bank.create(validatedBank)
