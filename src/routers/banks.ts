@@ -9,6 +9,7 @@ const baseURL = '/'
 
 router.get(baseURL, async (req: Request, res: Response): Promise<Response> => {
   const { pageParam, pageSize } = req.query
+  const isInfinteQuery = pageParam && pageSize
   const criteria = { bic: /PKKA$/i }
 
   const currentPage = Number(pageParam) || 1
@@ -17,11 +18,11 @@ router.get(baseURL, async (req: Request, res: Response): Promise<Response> => {
 
   const banks: IBank[] = await Bank.find(criteria).sort({bankName: 1}).skip(skip).limit(limit)
   const totalBanks = await Bank.countDocuments(criteria)
-  
+
   const totalPages = Math.ceil(totalBanks / limit)
   const nextPage = (currentPage * limit < totalBanks) ? (currentPage + 1) : null
 
-  return res.status(200).json(pageParam ? {banks, totalBanks, currentPage, nextPage, totalPages} : {banks})
+  return res.status(200).json(isInfinteQuery ? {banks, totalBanks, currentPage, nextPage, totalPages} : {banks})
 })
 
 router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Response> => {
@@ -33,7 +34,7 @@ router.get(`${baseURL}:id`, async (req: Request, res: Response): Promise<Respons
 router.post(baseURL, async (req: Request, res: Response): Promise<Response> => {
   const validatedBank: IBankInput = validate(req.body)
   const existingBank: IBank | null = await Bank.findOne({$or: [{ nickname: validatedBank.nickname }, { bankName: validatedBank.bankName }]})
-  if (existingBank) return res.status(409).json({ message: "Bank with the same Nickname already exists." })
+  if (existingBank) return res.status(409).json({ message: "Bank with the same Name or BIC already exists." })
 
   const bank: IBank = await Bank.create(validatedBank)
   await bank.save()
